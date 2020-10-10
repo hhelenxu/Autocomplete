@@ -9,14 +9,14 @@ public class HashListAutocomplete implements Autocompletor{
         if (terms == null || weights == null) {
             throw new NullPointerException("One or more arguments null");
         }
-
+        myMap = new HashMap<>();
         initialize(terms,weights);
     }
 
     @Override
     public List<Term> topMatches(String prefix, int k) {
         if (prefix.length() > MAX_PREFIX)
-            prefix = prefix.substring(0,MAX_PREFIX+1);
+            prefix = prefix.substring(0,MAX_PREFIX);
         if (!myMap.containsKey(prefix))
             return new ArrayList<>();
         List<Term> all = myMap.get(prefix);
@@ -25,8 +25,9 @@ public class HashListAutocomplete implements Autocompletor{
 
     @Override
     public void initialize(String[] terms, double[] weights) {
+
         for (int j=0;j<terms.length;j++) {
-            for (int i = 1; i < MAX_PREFIX + 1; i++) {
+            for (int i = 0; i<MAX_PREFIX+1 && i<terms[j].length()+1; i++) {
                 String prefix = terms[j].substring(0,i);
                 myMap.putIfAbsent(prefix,new ArrayList<>());
                 myMap.get(prefix).add(new Term(terms[j], weights[j]));
