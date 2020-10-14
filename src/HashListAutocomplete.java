@@ -45,7 +45,7 @@ public class HashListAutocomplete implements Autocompletor{
             for(String key : myMap.keySet()) {
                 mySize += key.length()*BYTES_PER_CHAR;
                 for (Term t:myMap.get(key))
-                    mySize += t.getWord().length()*BYTES_PER_CHAR+t.getWeight()*BYTES_PER_DOUBLE;
+                    mySize += t.getWord().length()*BYTES_PER_CHAR+BYTES_PER_DOUBLE;
             }
         }
         return mySize;
